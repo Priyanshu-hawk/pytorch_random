@@ -1,0 +1,8 @@
+venv*
+dataset
+mobile_price_classif
+Modular_DeepLearning/food101_3_class/data/
+*.pth
+*.pt
+*.pyc
+.ipynb_checkpoints/
