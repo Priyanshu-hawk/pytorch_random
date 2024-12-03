@@ -6,3 +6,6 @@ Modular_DeepLearning/food101_3_class/data/
 *.pt
 *.pyc
 .ipynb_checkpoints/
+__pycache__
+logs
+model

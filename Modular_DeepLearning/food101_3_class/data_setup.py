@@ -6,7 +6,7 @@ import sys
 def createDataloader(
         train_path: str,
         test_path: str,
-        batch_size: int,
+        BTACH_SIZE: int,
         train_transform: transforms.Compose,
         test_transform: transforms.Compose,
 ):
@@ -25,8 +25,8 @@ def createDataloader(
     train_data = datasets.ImageFolder(train_path, transform=train_transform, target_transform=None)
     test_data = datasets.ImageFolder(test_path, transform=test_transform)
 
-    train_dataloader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
-    test_dataloader = DataLoader(test_data, batch_size=batch_size, shuffle=True)
+    train_dataloader = DataLoader(train_data, batch_size=BTACH_SIZE, shuffle=True)
+    test_dataloader = DataLoader(test_data, batch_size=BTACH_SIZE, shuffle=True)
 
     return train_dataloader, test_dataloader, train_data.classes
 

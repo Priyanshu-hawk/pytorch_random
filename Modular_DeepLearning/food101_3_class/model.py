@@ -36,8 +36,13 @@ class ResidualBlockResNet50Above(nn.Module):
         x = self.relu(x)
         return x
 
-class ResNet650Above(nn.Module):
+class ResNet50Above(nn.Module):
     def __init__(self, Residual_block , layers, num_classes) -> None:
+        """
+        Residual block
+        layer list
+        out classes
+        """
         super().__init__()
         self.in_channels = 64
         self.base_layer = nn.Sequential(
