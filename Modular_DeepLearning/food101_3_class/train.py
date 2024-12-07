@@ -1,6 +1,6 @@
-from model import ResidualBlockResNet50Above, ResNet50Above
-from data_setup import createDataloader
-from utils import loss_fn, optimizer, trainit
+from .model import ResidualBlockResNet50Above, ResNet50Above
+from .data_setup import createDataloader
+from .utils import loss_fn, optimizer, trainit
 from torchvision import transforms
 import torch
 
