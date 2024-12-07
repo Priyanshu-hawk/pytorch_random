@@ -115,7 +115,7 @@ def trainit(model: nn.Module,
     os.makedirs(LOGS_PATH, exist_ok=True)
     os.makedirs(MODEL_PATH, exist_ok=True)
 
-    torch.save(model.state_dict(), os.path.join(MODEL_PATH, "best_model.pth"))
+    torch.save(best_model_weights, os.path.join(MODEL_PATH, "best_model.pth"))
 
     with open(os.path.join(LOGS_PATH, "train.json"), "w") as f:
         json.dump({k: [float(i) for i in v] for k, v in train_data.items()}, f)
