@@ -35,3 +35,32 @@ class PositionlEncoding(nn.Module):
     def forward(self, x):
         x = x+(self.pe[:, :x.shape[1], :]).required_grad(False)
         return self.dropout(x)
+
+class LayerNormalization(nn.Module):
+    def __init__(self, eps: float = 10**-6):
+        super().__init__()
+        self.eps = eps
+        self.alpha = nn.Parameter(torch.ones(1))
+        self.bias = nn.Parameter(torch.zeros(1))
+
+    def forward(self, x):
+        mean = x.mean(dim=-1, keepdim=True)
+        std = x.std(dim=-1, keepdim=True)
+
+        return self.alpha * (x - mean) / (std + self.eps) + self.bias
+
+class FeedForwardBloack(nn.Module):
+    def __init__(self, d_model: int, d_ff: int, dropout: float):
+        super().__init__()
+        self.linear1 = nn.Linear(d_model, d_ff) # w1 and b1
+        self.dropout = nn.Dropout(dropout)
+        self.linear2 = nn.Linear(d_ff, d_model) #w1 and b2
+        
+    def forward(self, x):
+        # (Batch, seq_len, d_model) --->  (Batch, seq_len, d_ff) ---> (Batch, seq_len, d_model)
+        return(self.linear2(self.dropout(torch.relu(self.linear1(x)))))
+    
+class MultiHeadAttention(nn.Module):
+    def __init__(self):
+        super().__init__()
+        pass
