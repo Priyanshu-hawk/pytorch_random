@@ -28,12 +28,12 @@ class PositionlEncoding(nn.Module):
         pe[:, 0::2] = torch.sin(postion * div_term)
         pe[:, 1::2] = torch.cos(postion * div_term)
 
-        ps = pe.unsqueeze(0)
+        pe = pe.unsqueeze(0)
 
         self.register_buffer("pe", pe)
 
     def forward(self, x):
-        x = x+(self.pe[:, :x.shape[1], :]).required_grad(False)
+        x = x+(self.pe[:, :x.shape[1], :]).requires_grad_(False)
         return self.dropout(x)
 
 class LayerNormalization(nn.Module):
@@ -82,11 +82,11 @@ class MultiHeadAttention(nn.Module):
 
         # batch, h, seq_len, d_k ---> batch, h, seq_len, seq_len
         attention_score = (query @ key.transpose(-2, -1)) / math.sqrt(d_k)
-        if mask: 
+        if mask is not None:
             attention_score.masked_fill_(mask == 0, -1e9)
         attention_score = attention_score.softmax(dim=-1) # batch, h, seq_len, seq_len
 
-        if dropout:
+        if dropout is not None:
             attention_score = dropout(attention_score)
 
         return(attention_score @ value), attention_score 
@@ -123,10 +123,10 @@ class EncoderBlock(nn.Module):
         super().__init__()
         self.self_attention_block = self_attention_block
         self.fead_forward = feed_forward
-        self.residual_connection = nn.ModuleDict([ResidualConnection(dropout) for _ in range(2)])
+        self.residual_connection = nn.ModuleList([ResidualConnection(dropout) for _ in range(2)])
 
     def forward(self, x, src_mask):
-        x = self.residual_connection[0][x, lambda x: self.self_attention_block(x,x,x, src_mask)]
+        x = self.residual_connection[0](x, lambda x: self.self_attention_block(x,x,x, src_mask))
         x = self.residual_connection[1](x, self.fead_forward)
         return x
     
@@ -240,7 +240,7 @@ def build_transformer(src_voc_size: int, tgt_voc_size: int,
     
     # creat the ecoder and decoder
     encoder = Encoder(nn.ModuleList(encoder_blocks))
-    decoder = Decoder(nn.ModuleDict(decoder_blocks))
+    decoder = Decoder(nn.ModuleList(decoder_blocks))
 
     # creat projection layer
     projection_layer = ProjectionLayer(d_model, tgt_voc_size)
