@@ -9,3 +9,4 @@ Modular_DeepLearning/food101_3_class/data/
 __pycache__
 logs
 model
+*runs
