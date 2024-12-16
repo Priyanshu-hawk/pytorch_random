@@ -13,7 +13,8 @@ def get_config():
         "model_basename": "tmodel_",
         "preload": None,
         "tokenizer_file": "tokenizer_{0}.json",
-        "epx_name": "runs/tmodel"
+        "epx_name": "runs/tmodel",
+        "HF_DS_Name": "opus_books"
     }
 
 def get_weights_file_path(config, epoch: str):
