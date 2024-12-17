@@ -16,6 +16,7 @@ from pathlib import Path
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
 import warnings
+import shutil
 
 def greedy_decoder(model, source, source_mask, tokenizer_src, tokenizer_tgt, max_len, device):
     sos_idx = tokenizer_tgt.token_to_id("[SOS]")
@@ -153,6 +154,13 @@ def get_model(config, vocab_src_len, vocab_tgt_len):
     model = build_transformer(vocab_src_len, vocab_tgt_len, config["seq_len"], config["seq_len"], config["d_model"])
     return model
 
+def is_colab():
+    try:
+        import google.colab
+        return True
+    except:
+        return False
+
 def train_model(config):
     #Define device
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -224,6 +232,9 @@ def train_model(config):
             "optimizer-state-dict": optimzer.state_dict(),
             "global_step": gloabl_step 
         }, model_filename)
+
+        if is_colab():
+            shutil.copy(model_filename, "/content/drive/MyDrive/Trasnformer_W/")
 
 if __name__ == "__main__":
     warnings.filterwarnings('ignore')
