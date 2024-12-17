@@ -117,7 +117,7 @@ def get_tokenizer(config, ds, lang):
     return tokenizer
 
 def get_ds(config):
-    ds_raw = load_dataset(config["HF_DS_Name"], f'{config["src_lang"]}-{config["tgt_lang"]}', split="train")
+    ds_raw = load_dataset(config["HF_DS_Name"], f'{config["src_lang"]}-{config["tgt_lang"]}', split="train[:10%]") # taking 10% of ds, bcz for hindi opus it quite large
 
     # build tokenizers
     tokenizer_src = get_tokenizer(config, ds_raw, config["src_lang"])
@@ -158,7 +158,7 @@ def train_model(config):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device - {device}")
 
-    Path(f"{config["HF_DS_Name"]}_{config["model_folder"]}").mkdir(parents=True, exist_ok=True)
+    Path("{}_{}".format(config["HF_DS_Name"], config["model_folder"])).mkdir(parents=True, exist_ok=True)
 
     train_dataloader, val_dataloader, tokenizer_src, tokenizer_tgt = get_ds(config)
     model = get_model(config, tokenizer_src.get_vocab_size(), tokenizer_tgt.get_vocab_size()).to(device)
