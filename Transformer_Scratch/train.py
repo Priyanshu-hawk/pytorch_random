@@ -186,7 +186,11 @@ def train_model(config):
         initial_epoch = state["epoch"] + 1
 
         optimzer.load_state_dict(state["optimizer_state_dict"])
-        gloabl_step = state["gloabl_step"]
+        gloabl_step = state["global_step"]
+
+        print("Resume Training from: {} epoch".format(gloabl_step))
+    else:
+        print("Starting a fresh Training")
     
     loss_fn = nn.CrossEntropyLoss(ignore_index=tokenizer_src.token_to_id("[PAD]"), label_smoothing=0.1).to(device)
 
@@ -229,8 +233,8 @@ def train_model(config):
         model_filename = get_weights_file_path(config, f'{e:02d}')
         torch.save({
             "epoch": e,
-            "model_sate_dict": model.state_dict(),
-            "optimizer-state-dict": optimzer.state_dict(),
+            "model_state_dict": model.state_dict(),
+            "optimizer_state_dict": optimzer.state_dict(),
             "global_step": gloabl_step 
         }, model_filename)
 

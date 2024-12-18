@@ -11,7 +11,7 @@ def get_config():
         "tgt_lang": "hi",
         "model_folder": "weights",
         "model_basename": "tmodel_",
-        "preload": None,
+        "preload": "02",
         "tokenizer_file": "tokenizer_{0}.json",
         "epx_name": "runs/tmodel",
         "HF_DS_Name": "Helsinki-NLP/opus-100"
