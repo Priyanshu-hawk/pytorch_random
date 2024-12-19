@@ -4,14 +4,14 @@
 
 ## In This Repository:
 - Pytorch Bacis (0)
-- PT workflow (01)
-- PT Classifications (02)
-- PT cnn models and torchvision (03)
-- PT transfer learning (04)
-- PT Modularization - py file implementation from ipynb
-- PT tracking, logging and experiments (05)
-- PT transformers
-- PT RNNs
+- PyTorch workflow (01)
+- PyTorch Classifications (02)
+- PyTorch cnn models and torchvision (03)
+- PyTorch transfer learning (04)
+- PyTorch Modularization - py file implementation from ipynb
+- PyTorch tracking, logging and experiments (05)
+- Transformers
+- RNNs
     - PT LSTM
     - PT GRU
-- PT UNets
+- Vision Transformers
