@@ -2,3 +2,4 @@ torchinfo
 datasets
 torchmetrics
 altair
+matplotlib
