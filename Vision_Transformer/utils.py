@@ -11,7 +11,7 @@ import json
 def loss_fn(device):
     return nn.CrossEntropyLoss().to(device)
 
-def optimizer( optimz: str, learning_rate: float, model: nn.Module):
+def optimizer_fnc( optimz: str, learning_rate: float, model: nn.Module):
     """
     rmsprop
     
