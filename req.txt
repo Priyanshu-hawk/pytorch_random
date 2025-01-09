@@ -4,3 +4,4 @@ torchmetrics
 altair
 matplotlib
 scipy
+torchinfo
